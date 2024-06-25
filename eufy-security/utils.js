@@ -18,7 +18,8 @@ function safeStringify(obj, indent = 2) {
 function transformProperties(properties) {
   const result = {};
   Object.entries(properties).forEach(([key, value]) => {
-    result[key] = value?.value;
+    //result[key] = value?.value; //this is always undefined
+    result[key] = value;
   });
 
   return result;
