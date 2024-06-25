@@ -10,6 +10,9 @@
 
    It does not appear that the current nodered contrib has a method for this although it will show "awaiting captcha" on the flow editor and store the api's response with id/image in the payload
 
+   Correction: the captcha is sent via the "connect" command, we need the captcha id and the captcha answer to be sent along with the connect request. We can use an inline node-red plugin to display the image retrieved by the connect command indicating a captcha is required (awaiting captcha) or we can use the node-red dashboard to display the image. The we can inject the connect request once we have the correct parameters to include.
+   
+
 [DONE] 2. Locate/fix issues with device attributes showing as "undefined" in nodered
 
    Problem found in original utils.js where values in properties array were being replaced with an invalid/undefined value. Not sure how to suggest/merge pull request since I'm taking this a bit further.
