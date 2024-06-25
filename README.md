@@ -1,10 +1,15 @@
-# node-red-contrib-eufy-security
+# node-red-contrib-eufy-security3
 
 ## Description
 
 [Node-RED][1] contribution package for [Eufy security devices][2], based on [eufy-security-client][3]
 
 Node RED plugin wrapper around [eufy-security-client][2] library to access and control by connecting to the Eufy cloud servers and local/remote stations over P2P.
+
+## Special Thanks
+
+The original project from Marius Bieliauskas can be found here https://github.com/recallfx/node-red-contrib-eufy-security.git. I separated this project for updating to eventually use nodered to update Hubitat Elevation device objects with the status of cameras for home automation.
+
 
 ### Note
 
