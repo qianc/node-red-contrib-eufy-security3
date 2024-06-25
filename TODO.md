@@ -10,9 +10,10 @@
 
    It does not appear that the current nodered contrib has a method for this although it will show "awaiting captcha" on the flow editor and store the api's response with id/image in the payload
 
-2. Locate/fix issues with device attributes showing as "undefined" in nodered
+[DONE] 2. Locate/fix issues with device attributes showing as "undefined" in nodered
 
-   Note that Bropat's implementation of the eufy-security-client with their ioBroker demo, which was also created in nodered, properly returns the values of a device/station's attributes.
+   Problem found in original utils.js where values in properties array were being replaced with an invalid/undefined value. Not sure how to suggest/merge pull request since I'm taking this a bit further.
+   
+[DONE] 3. Use the latest eufy-security-client (currently at 3.0.0)
 
-3. Use the latest eufy-security-client (currently at 3.0.0)
 4. 
