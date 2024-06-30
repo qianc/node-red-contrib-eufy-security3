@@ -1,0 +1,31 @@
+[
+    {
+        "id": "901870ad6386ae60",
+        "type": "inject",
+        "z": "049542b9958f9847",
+        "name": "connect TFA",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"command\":\"connect\",\"loginOptions\":{\"verifyCode\":\"123456\"}}",
+        "payloadType": "json",
+        "x": 450,
+        "y": 80,
+        "wires": [
+            [
+                "69bf09dc40cc0580"
+            ]
+        ]
+    }
+]
