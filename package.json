@@ -34,7 +34,7 @@
     "version": ">=3.0.0"
   },
   "dependencies": {
-    "eufy-security-client": "^3.0.0"
+    "eufy-security-client": "^3.1.0"
   },
   "devDependencies": {
     "jest": "^29.6.2",
