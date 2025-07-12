@@ -1,6 +1,8 @@
 const EVENT_COMMAND_RESULT = 'command result';
 const EUFY_SECURITY_COMMANDS = {
   SET_STATION_PROPERTY: 'set station property',
+  RESET_STATION_ALARM: 'reset station alarm',
+  TRIGGER_STATION_ALARM: 'trigger station alarm',
   SET_DEVICE_PROPERTY: 'set device property',
   GET_CONFIG: 'get config',
   GET_VERSION: 'get version',

@@ -169,6 +169,16 @@ module.exports = function (RED) {
             case EUFY_SECURITY_COMMANDS.SET_STATION_PROPERTY:
               await this._setStationProperty(stationSN, name, value);
               break;
+            case EUFY_SECURITY_COMMANDS.RESET_STATION_ALARM:
+              await this.driver.getStation(stationSN).then((station) => {
+                  station.resetStationAlarmSound();
+              });
+              break;
+            case EUFY_SECURITY_COMMANDS.TRIGGER_STATION_ALARM:
+              await this.driver.getStation(stationSN).then((station) => {
+                  station.triggerStationAlarmSound(seconds);
+              });
+              break;
             case EUFY_SECURITY_COMMANDS.SET_DEVICE_PROPERTY:
               await this._setDeviceProperty(deviceSN, name, value);
               break;
