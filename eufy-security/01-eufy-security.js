@@ -2,6 +2,7 @@ module.exports = function (RED) {
   "use strict";
   /** @type {import('eufy-security-client')}  */
   const { EufySecurity, PropertyName } = require("eufy-security-client");
+  const { createHash } = require("crypto");
   const eventsDefinition = require("./events");
   const { transformProperties } = require("./utils");
   const {
@@ -89,6 +90,8 @@ module.exports = function (RED) {
       /** @type {EufySecurity} */
       this.driver = await EufySecurity.initialize(driverConnectionConfig, RED.log);
 
+      this.applyGTokenHeader();
+
       // driver events
       this.driver.on("connect", () => {
         this.status({ fill: "green", shape: "dot", text: "Connected" });
@@ -133,6 +136,42 @@ module.exports = function (RED) {
       this.initialized = true;
 
       await this.connect();
+    }
+
+    /**
+     * The Eufy cloud rejects API calls that omit the `gtoken` header, answering
+     * `{code: 200, msg: ""}` instead of `{code: 0, msg: "Succeed."}`.
+     *
+     * eufy-security-client only ever assigns `gtoken` inside the successful
+     * full-login branch, and it does so by *reassigning* `api.headers` — which
+     * the underlying `got` instance copied at construction time and never
+     * re-reads. So the header is not sent on any code path. When a persisted
+     * cloud_token is restored, login() is skipped entirely and the session is
+     * validated with getPassportProfile(), which then fails the `code === 0`
+     * check and surfaces as `ApiInvalidResponseError: Invalid passport profile
+     * response` — with no CAPTCHA or TFA request, because a full login never
+     * happens.
+     *
+     * Merge the header into the got defaults instead, so it survives both the
+     * restore path and invalidateToken() (which only clears X-Auth-Token).
+     */
+    applyGTokenHeader() {
+      try {
+        const api = this.driver?.api;
+        const userId = api?.getPersistentData?.()?.user_id;
+
+        // No persisted user id yet means a first-time login, which sets its own
+        // gtoken; nothing to back-fill.
+        if (!userId || !api?.requestEufyCloud) {
+          return;
+        }
+
+        api.requestEufyCloud.defaults.options.merge({
+          headers: { gtoken: createHash("md5").update(userId).digest("hex") },
+        });
+      } catch (error) {
+        this.warn(`Could not set the gtoken header: ${error.message}`);
+      }
     }
 
     async connect() {
